@@ -6,6 +6,12 @@ on:
       ROM_LINK:
         description: "Direct Link of ROM/Firmware"
         required: true
+      USER_NAME:
+        description: "Your GitHub username"
+        required: true
+      USER_EMAIL:
+        description: "Your GitHub email"
+        required: true
 
 env:
   ROM_LINK: ${{ github.event.inputs.ROM_LINK }}
@@ -27,6 +33,8 @@ jobs:
           echo "$GITHUB_TOKEN" > .github_token
           echo "$TG_TOKEN" > .tg_token
           echo "$CHAT_ID" > .tg_chat
+          git config --global user.name "${USER_NAME}"
+          git config --global user.email "${USER_EMAIL}"
           ./dumper.sh "${ROM_LINK}" || exit 1
 
           echo test, and deploy your project.
